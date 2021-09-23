@@ -1,0 +1,55 @@
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width,intial-scale-1">
+        <link rel="stylesheet" href="w3.css">
+        <title>daffapedia | bookstoreid</title>
+    </head>
+    <body>
+        <div class="w3-bar w3-grey">
+            <a href="./index.php" class="w3-bar-item w3-button">Home</a>
+            <a href="./admin/index.php" class="w3-bar-item w3-button">Admin</a>
+        </div>
+        <div class="w3-container w3-light-gray">
+            <h1 class="w3-center w3-opacity"><b>Produk Baru 2021</b></h1>
+        </div>
+        <div class="w3-row-padding w3-margin-top">
+            <?php
+                require("koneksi.php");
+                $sql="select * from barang";
+                $hasil=mysqli_query($conn,$sql);
+                $row=mysqli_fetch_row($hasil);
+                $n=1;
+                do
+                {
+                    list($kodebrg,$nambarang,$harga,$stok,$deskripsi)=$row;
+                
+            ?>
+            <div class="w3-third">
+                <div class="w3-card">
+            <br>
+            <?php
+                echo ("<center><img src='./images/$kodebrg.jpg' width=60%></center>");
+            ?>
+                <div class="w3-container">
+                <?php
+                    echo ("<h5><b>$nambarang</b><br>");
+                    echo ("<font color='red'>");
+                    echo ("Rp");
+                    echo number_format($harga,2,",",".");
+                    echo ("</font>");
+                    echo ("<br><h6>Stok : $stok");
+                    echo ("<br>Deskripsi : $deskripsi</h6></h5>");
+                    echo ("<a class='w3-btn w3-red' href='index.php?p=belisekarang&kodebrg=$kodebrg'>Beli Sekarang </a>");
+                ?>
+                </div>
+            <br>
+                </div>
+                <br>            
+            </div>
+            <?php
+                }
+                while ($row=mysqli_fetch_row($hasil));
+            ?>
+        </div>        
+    </body>
+</html>
